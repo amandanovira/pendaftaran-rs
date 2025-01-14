@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Pasien Rumah Sakit</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        /* Tambahan untuk bagian Chat */
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            text-align: right;
+            color: blue;
+            margin-bottom: 5px;
+        }
+
+        .ai-message {
+            text-align: left;
+            color: green;
+            margin-bottom: 5px;
+        }
+
+        #chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        #chat-input input {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Rumah Sakit Bersama</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#cek-kamar">Cek Kamar</a></li>
+                <li><a href="#pendaftaran">Pendaftaran Pasien</a></li>
+                <li><a href="#chat-ai">Chat AI</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Bagian Beranda -->
+        <section id="home">
+            <h2>Selamat Datang di Rumah Sakit Bersama</h2>
+            <p>Kami siap membantu Anda dalam proses perawatan kesehatan.</p>
+        </section>
+
+        <!-- Bagian Cek Kamar -->
+        <section id="cek-kamar">
+            <h2>Cek Kamar</h2>
+            <label for="room-type">Pilih Tipe Kamar:</label>
+            <select id="room-type">
+                <option value="ekonomi">Ekonomi</option>
+                <option value="kelas1">Kelas 1</option>
+                <option value="kelas2">Kelas 2</option>
+                <option value="vip">VIP</option>
+            </select>
+            <button onclick="checkRoom()">Cek Kamar</button>
+            <p id="room-result"></p>
+        </section>
+
+        <!-- Bagian Pendaftaran Pasien -->
+        <section id="pendaftaran">
+            <h2>Pendaftaran Pasien</h2>
+            <form id="registration-form">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="age">Usia:</label>
+                <input type="number" id="age" name="age" required>
+                
+                <label for="gender">Jenis Kelamin:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                </select>
+        
+                <label for="dob">Tanggal Lahir:</label>
+                <input type="date" id="dob" name="dob" required>
+                
+                <input type="submit" value="Daftar">
+            </form>
+        </section>
+
+        <!-- Bagian Chat AI -->
+        <section id="chat-ai">
+            <h2>Chat AI</h2>
+            <div id="chat-box"></div>
+            <div id="chat-input">
+                <input type="text" id="user-input" placeholder="Tanya sesuatu...">
+                <button id="send-button">Kirim</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Rumah Sakit Bersama. Percayakan Kesehatan Anda Pada Medis.</p>
+    </footer>
+
+    <script>
+        // Fungsi untuk mengirim pesan
+        function sendMessage() {
+            const userInput = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-box");
+            const message = userInput.value.trim();
+
+            // Validasi input kosong
+            if (message === "") {
+                return;
+            }
+
+            // Tampilkan pesan pengguna
+            const userMessage = document.createElement("div");
+            userMessage.textContent = "Anda: " + message;
+            userMessage.className = "user-message";
+            chatBox.appendChild(userMessage);
+
+            // Tampilkan respon AI
+            const aiMessage = document.createElement("div");
+            aiMessage.textContent = "AI: " + getResponse(message);
+            aiMessage.className = "ai-message";
+            chatBox.appendChild(aiMessage);
+
+            // Bersihkan input dan scroll ke bawah
+            userInput.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Fungsi untuk respons AI
+        function getResponse(message) {
+            message = message.toLowerCase();
+
+            // Respon sederhana berdasarkan kata kunci
+            if (message.includes("halo")) {
+                return "Halo juga! Ada yang bisa saya bantu?";
+            } else if (message.includes("kamar")) {
+                return "Anda bisa memeriksa ketersediaan kamar di bagian 'Cek Kamar'.";
+            } else if (message.includes("daftar")) {
+                return "Silakan isi formulir di bagian 'Pendaftaran Pasien'.";
+            } else {
+                return "Maaf, saya tidak mengerti pertanyaan Anda.";
+            }
+        }
+
+        // Tambahkan event listener untuk tombol kirim
+        document.getElementById("send-button").addEventListener("click", sendMessage);
+
+        // Tambahkan event listener untuk tombol Enter
+        document.getElementById("user-input").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
+x
